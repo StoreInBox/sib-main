@@ -15,11 +15,11 @@ install_requires = [
     'Unidecode==0.04.18',
     'django-model-utils==2.3.1',
     # SIB applications
-    "products",
+    "sib-products",
 ]
 
 dependency_links = [
-    'git+https://github.com/StoreInBox/sib-products.git#egg=products',
+    'git+https://github.com/StoreInBox/sib-products.git#egg=sib-products',
 ]
 
 setup(
