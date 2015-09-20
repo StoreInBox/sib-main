@@ -58,7 +58,7 @@ TEMPLATE_DIRS = (
 
 ROOT_URLCONF = 'main.server.urls'
 
-WSGI_APPLICATION = 'wsgi.application'
+WSGI_APPLICATION = 'main.server.wsgi.application'
 
 
 # Internationalization
