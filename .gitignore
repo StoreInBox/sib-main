@@ -5,7 +5,6 @@
 *.egg-info
 *.pyc
 db.sqlite3
-celerybeat-schedule
 
 /.idea
 /.project
@@ -13,13 +12,11 @@ celerybeat-schedule
 /.settings
 /.sublime
 
-nodeconductor/server/settings.py
-nodeconductor_plus
-ncplus
-
 # Editor artifacts
 # vim
 *.sw*
+
+/main/server/settings/custom.py
 
 # Testing artifacts
 

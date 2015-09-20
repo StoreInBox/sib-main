@@ -2,9 +2,16 @@
 import json
 
 from django.http import HttpResponse
-from django.views.generic import ListView
+from django.shortcuts import render
+from django.views.generic import ListView, View
 
 from products import models as products_models
+
+
+class HomeView(View):
+
+    def get(self, request):
+        return render(request, 'home/home.html')
 
 
 class ProductListView(ListView):

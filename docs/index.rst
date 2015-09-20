@@ -11,7 +11,15 @@ Template pages:
 .. toctree::
    :maxdepth: 1
 
+   pages/home_page
    pages/product_list_page
+
+Template processors, filters and tags:
+
+.. toctree::
+   :maxdepth: 1
+
+   pages/context_processors
 
 
 API endpoints:

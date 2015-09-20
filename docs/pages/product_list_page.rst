@@ -1,10 +1,12 @@
 Product list page
 =================
 
-URL
-^^^
+URL details
+^^^^^^^^^^^
 
-**products/**
+* URL itself: **^(?P<category_id>[\d+])/(?P<category_slug>[-\w]+)/$**
+* URL name: **products**
+
 
 Template names
 ^^^^^^^^^^^^^^

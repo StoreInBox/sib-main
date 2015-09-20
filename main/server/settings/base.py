@@ -47,6 +47,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',
     'django.core.context_processors.csrf',
     "django.contrib.messages.context_processors.messages",
+    # custom
+    "products.context_processors.categories"
 )
 
 

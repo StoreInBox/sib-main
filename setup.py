@@ -7,19 +7,24 @@ dev_requires = [
     'ipython==4.0.0',
 ]
 
-tests_requires = []
+tests_requires = [
+    'factory_boy==2.5.2',
+]
 
 install_requires = [
     # '--process-dependency-links',
     'Django==1.8.4',
+    'Sphinx==1.3.1',
     'Unidecode==0.04.18',
     'django-model-utils==2.3.1',
     # SIB applications
-    "sib-products",
+    'sib-products',
+    'sib-filters',
 ]
 
 dependency_links = [
     'git+https://github.com/StoreInBox/sib-products.git#egg=sib-products',
+    'git+https://github.com/StoreInBox/sib-filters.git#egg=sib-filters',
 ]
 
 setup(
