@@ -1,7 +1,0 @@
-{% for category in categories %}
-	{{ category }}<br/>
-	{% for child in category.children.all %}
-		 - {{ child }}<br/>
-	{% endfor %}
-	<hr/>
-{% endfor %}

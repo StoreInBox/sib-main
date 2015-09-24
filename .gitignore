@@ -25,4 +25,7 @@ TEST-*.xml
 # documentation
 docs/_build/
 
+# Frontend
+/frontend/static
+/frontend/node_modules
 /static_files
