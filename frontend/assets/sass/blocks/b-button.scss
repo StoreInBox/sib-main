@@ -1,0 +1,14 @@
+.b-button {
+    background-color: #c0392b;
+    color: white;
+    border-radius: 3px;
+    @include font-size(16);
+    &__icon {
+        @include font-size(14);
+        margin-right: 5px;
+    }
+    &--thin {
+        line-height: 1;
+        padding: 4px 6px;
+    }
+}
