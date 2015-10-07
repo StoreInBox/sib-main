@@ -1,0 +1,16 @@
+.specs {
+    width: 100%;
+    tr {
+        &:nth-child(even) {
+            background-color: #F3F3F3;
+        }
+    }
+}
+
+.specs-key {
+    padding: 10px;
+}
+
+.specs-value {
+    padding: 10px;
+}

@@ -1,0 +1,11 @@
+.b-price-tag {
+    &--product-list {
+        width: 50%;
+    }
+    &--big {
+        @include font-size(24);
+    }
+    &__value {
+        font-weight: 700;
+    }
+}

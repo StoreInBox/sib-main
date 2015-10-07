@@ -1,0 +1,9 @@
+@mixin inline-middle {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+@mixin inline-top {
+    display: inline-block;
+    vertical-align: top;
+}
