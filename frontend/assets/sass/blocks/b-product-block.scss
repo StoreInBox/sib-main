@@ -1,0 +1,17 @@
+.product-block {
+    @include basic-block;
+    width: 70%;
+    margin: auto;
+    @include bp(md) {
+        width: 90%
+    }
+    @include bp(allsmall) {
+        width: 100%;
+    }
+}
+
+.product-block-title {
+    &__text {
+        font-weight: 700;
+    }
+}

@@ -24,6 +24,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     # sib applications
     'products',
+    'filters',
     # main module
     'main.assembly',
 )
@@ -96,3 +97,12 @@ STATICFILES_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
     os.path.join(PROJECT_DIR, 'frontend', 'static'),
 )
+
+
+# *************************** APPLICATIONS SETTINGS *************************** #
+
+FILTERS = {
+    'Product': 'products.Product',
+    'Category': 'products.Category',
+    'Characteristic': 'products.Characteristic',
+}

@@ -1,1 +1,121 @@
-{{ product_list }}
+{% load assembly_tags %}
+{# This tags are loaded for custom tag "get_range" that is used for pagination #}
+
+<h3> Category </h3>
+
+Category name: {{ category.name }}
+<br/>
+Parent category name (if it exists): {{ category.parent.name }}
+<br/>
+
+<h3> Products </h3>
+
+Total amount of products in category: {{ count }}
+<br/>
+
+<table border="1">
+    <header>
+        <th> name </th>
+        <th> code </th>
+        <th> brand </th>
+        <th> short description </th>
+        <th> price </th>
+    </header>
+    <body>
+        {% for product in product_list %}
+        <tr>
+            <td>{{ product.name }}</td>
+            <td>{{ product.code }}</td>
+            <td>{{ product.brand }}</td>
+            <td>{{ product.short_description }}</td>
+            <td>{{ product.price }}</td>
+        </tr>
+        {% endfor %}
+    </body>
+</table>
+(Products images is not implemented yet)
+
+<h3> Filters </h3>
+
+Not implemented yet.
+
+<h3> Ordering </h3>
+
+Not implemented yet.
+
+<h3> Pagination </h3>
+
+<a href="https://docs.djangoproject.com/en/1.8/topics/pagination/#using-paginator-in-a-view">Django documentation for pagination.</a>
+<br/>
+Total amount of pages with products: {{ page_obj.paginator.num_pages }}
+<br/>
+Products on page: {{ page_obj.paginator.per_page }} |
+<a href="?paginate_by=24">Change page size to 24</a> |
+<a href="?paginate_by=12">Change page size to 12</a>
+<br/>
+Example of pagination:
+<br/>
+<!-- pagination -->
+<ul class="pagination">
+    {% if page_obj.has_previous %}
+        <li><a href="?page={{ page_obj.previous_page_number }}"> &lt; </a></li>
+    {% else %}
+        <li><a> &lt; </a></li>
+    {% endif %}
+    {% with page_obj.number as current %}
+    {% with page_obj.paginator.num_pages as last %}
+        {% if 4 >= current and current|add:3 >= last %}
+            {% for i in last|get_range %}
+            <li>
+                <a href="?page={{ i|add:1 }}">{{ i|add:1 }} {% if i|add:1 == current %}active{% endif %}</a>
+            </li>
+            {% endfor %}
+        {% elif 4 >= current and current|add:3 < last %}
+            {% for i in current|add:1|get_range %}
+            <li>
+                <a href="?page={{ i|add:1 }}">{{ i|add:1 }} {% if i|add:1 == current %}active{% endif %}</a>
+            </li>
+            {% endfor %}
+            <li class="disabled"><a>...</a></li>
+            <li><a href="?page={{ last|add:-1 }}">{{ last|add:-1 }}</a></li>
+            <li><a href="?page=">{{ last }}</a></li>
+        {% elif 4 < current and current|add:3 < last %}
+            <li><a href="?page=1">1</a></li>
+            <li><a href="?page=2">2</a></li>
+            <li class="disabled"><a>...</a></li>
+            <li><a href="?page={{ current|add:-1 }}">{{ current|add:-1 }}</a></li>
+            <li><a href="?page={{ current }}">{{ current }} active</a></li>
+            <li><a href="?page={{ current|add:1  }}">{{ current|add:1 }}</a></li>
+            <li class="disabled"><a>...</a></li>
+            <li><a href="?page={{ last|add:-1 }}">{{ last|add:-1 }}</a></li>
+            <li><a href="?page={{ last }}">{{ last }}</a></li>
+        {% elif 4 < current and current|add:3 >= last %}
+            <li><a href="?page=1">1</a></li>
+            <li><a href="?page=2">2</a></li>
+            <li class="disabled"><a>...</a></li>
+            {% for i in last|get_range %}
+            {% if i|add:1 > current|add:-2 %}
+            <li>
+                <a href="?page={{ i|add:1 }}">{{ i|add:1 }} {% if i|add:1 == current %}active{% endif %}</a>
+            </li>
+            {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    {% endwith %}
+    {% if page_obj.has_next %}
+        <li><a href="?page={{ page_obj.next_page_number }}"> &gt; </a></li>
+    {% else %}
+        <li><a> &gt; </a></li>
+    {% endif %}
+</ul>
+
+<h3> Additional info </h3>
+
+<p> If current URL will be called with ajax it will return template 'products/product_list_ajax.html' with the
+same parameters. (Can be used to show products without pagination) </p>
+
+<p> If current URL will be called with GET parameter ?count - it will return only amount of products in category. This
+can be used for filters (to show how many results is filtered out). </p>
+
+

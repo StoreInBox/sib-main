@@ -26,6 +26,8 @@ TEST-*.xml
 docs/_build/
 
 # Frontend
+/frontend/.sass-cache
 /frontend/static
 /frontend/node_modules
+/frontend/bower_components
 /static_files
