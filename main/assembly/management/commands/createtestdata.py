@@ -3,14 +3,13 @@ from __future__ import unicode_literals
 
 import os
 import random
+import uuid
 
 from django.conf import settings
 from django.core.files import File
 from django.core.management.base import BaseCommand
 from django.contrib.auth import get_user_model
-from django.template.defaultfilters import slugify
 
-from ... import models
 from products import models as products_models
 
 
@@ -75,10 +74,10 @@ class Command(BaseCommand):
         },
     ]
 
-    # def _get_test_image(self):
-    #     path = os.path.join(settings.BASE_DIR, 'assembly', 'management', 'commands', 'testimages')
-    #     images = [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))]
-    #     return File(open(os.path.join(path, random.choice(images))))
+    def _get_test_image(self):
+        path = os.path.join(settings.BASE_DIR, 'main', 'assembly', 'management', 'commands', 'testimages')
+        images = [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))]
+        return File(open(os.path.join(path, random.choice(images))))
 
     def _create_characteristics(self):
         self.stdout.write('Creating characteristics...')
@@ -109,43 +108,24 @@ class Command(BaseCommand):
             self.stdout.write('User admin already exists')
         self.stdout.write('...Done')
 
-    # def _create_products(self, fast=False):
-    #     self.stdout.write('Creating products...')
-    #     subcategories = products_models.Subcategory.objects.all()
-    #     if fast:
-    #         subcategories = subcategories[:2]
-    #     for index, subcategory in enumerate(subcategories):
-    #         self.stdout.write('Creating products for subcategory {}'.format(subcategory))
-    #         for i in range(3 if index == 0 else 3):
-    #             product = products_models.Product.objects.create(
-    #                 name='product-{}-{}'.format(subcategory.id, i),
-    #                 short_description='product-short-description-{}-{}'.format(subcategory.id, i),
-    #                 description='product-description-{}-{}'.format(subcategory.id, i),
-    #                 subcategory=subcategory,
-    #                 materials=subcategories[1],
-    #             )
-    #             products_models.ProductImage.objects.create(
-    #                 product=product,
-    #                 image=self._get_test_image(),
-    #                 description='Image for product {}'.format(product.name)
-    #             )
-    #             products_models.ProductImage.objects.create(
-    #                 product=product,
-    #                 image=self._get_test_image(),
-    #                 description='Second image for product {}'.format(product.name)
-    #             )
-    #             for j in range(3 if not index else 1):
-    #                 product_configuration = products_models.ProductConfiguration.objects.create(
-    #                     product=product,
-    #                     code='pc-{}-{}-{}'.format(index, i, j),
-    #                     price_uah=10 * (index + 1) * (i + 1) * (j + 1),
-    #                 )
-    #                 product_configuration.attrs.brand = random.choice(['B1', 'B2', 'B3', 'B4', 'B5'])
-    #                 product_configuration.attrs.width = random.choice(['10', '20', '30', '40', '50'])
-    #                 product_configuration.attrs.height = 10
-    #                 product_configuration.attrs.weight = random.choice(['100', '200', '300', '400', '500'])
-    #         self.stdout.write('Products created')
-    #     self.stdout.write('...Done')
+    def _create_products(self, fast=False):
+        self.stdout.write('Creating products...')
+        categories = products_models.Category.objects.all()
+        if fast:
+            categories = categories[:2]
+        for index, category in enumerate(categories):
+            self.stdout.write(' - creating products for category {}'.format(category))
+            for i in range(15 if index == 0 else 3):
+                products_models.Product.objects.create(
+                    name='product-{}-{}'.format(category.id, i),
+                    code=uuid.uuid4().hex,
+                    brand=random.choice(['B1', 'B2', 'B3', 'B4', 'B5']),
+                    short_description='product-short-description-{}-{}'.format(category.id, i),
+                    description='product-description-{}-{}'.format(category.id, i),
+                    category=category,
+                    price=(i + 1) * 20,
+                )
+        self.stdout.write('...Done')
 
     # def _create_filters(self, fast=False):
     #     self.stdout.write('Creating filters...')
@@ -179,5 +159,5 @@ class Command(BaseCommand):
         self._create_characteristics()
         self._create_categories()
         self._create_users()
-        # self._create_products(fast='fast' in args)
+        self._create_products(fast='fast' in args)
         # self._create_filters(fast='fast' in args)

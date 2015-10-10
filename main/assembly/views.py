@@ -2,7 +2,7 @@
 import json
 
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, View
 
 from products import models as products_models
@@ -19,6 +19,7 @@ class ProductListView(ListView):
     allow_empty = True
 
     def get(self, request, *args, **kwargs):
+        self.category = self._get_category()
         if request.is_ajax() and 'count' in request.GET:
             return HttpResponse(
                 json.dumps(self.get_queryset().count()),
@@ -27,8 +28,7 @@ class ProductListView(ListView):
         return super(ProductListView, self).get(request, *args, **kwargs)
 
     def get_queryset(self):
-        queryset = products_models.Product.objects.filter(is_active=True)
-        return queryset
+        return self.category.get_products().filter(is_active=True)
 
     def get_template_names(self):
         template = super(ProductListView, self).get_template_names()[0]
@@ -50,3 +50,13 @@ class ProductListView(ListView):
         else:
             self.paginate_by = self.request.session.get(key, self.paginate_by)
         return self.paginate_by
+
+    def get_context_data(self, **kwargs):
+        context = super(ProductListView, self).get_context_data(**kwargs)
+        context['count'] = self.get_queryset().count()
+        context['category'] = self.category
+        return context
+
+    def _get_category(self):
+        return get_object_or_404(
+            products_models.Category, pk=self.kwargs['category_pk'], slug=self.kwargs['category_slug'])
