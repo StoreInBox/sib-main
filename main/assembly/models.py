@@ -1,41 +1,40 @@
 # coding: utf-8
 from __future__ import unicode_literals
 
-from django.db import models
+from django.utils.translation import ugettext
 
 from filters import models as filters_models
-from products import models as products_models
 
 
-class BaseFilter(models.Model):
-    class Meta:
-        abstract = True
+class PriceFilter(filters_models.NumericProductFieldFilterMixin):
 
-    # objects = ProductFilterManager()
+    def get_field(self):
+        return 'price'
 
-    category = models.ForeignKey(products_models.Category, null=True)
+    @classmethod
+    def is_default(cls):
+        return True
 
-    def get_related_products(self):
-        return self.category.get_products()
+    @classmethod
+    def get_default_creation_kwargs(cls):
+        return {'name': ugettext('Price'), 'priority': 100}
+
+    def get_template_name(self):
+        return 'price'
 
 
-# TODO: Propagate filters to subcategories
+class BrandFilter(filters_models.ChoicesProductFieldFilterMixin):
 
-class NumericPriceFilter(filters_models.NumericFilterMixin, BaseFilter):
+    def get_field(self):
+        return 'brand'
 
-    def _get_min_and_max(self, request):
-        selected_max_value = request.GET.get('{}-max'.format(self.get_item_prefix()), self.max_value)
-        selected_min_value = request.GET.get('{}-min'.format(self.get_item_prefix()), self.min_value)
-        return selected_min_value, selected_max_value
+    @classmethod
+    def is_default(cls):
+        return True
 
-    def filter(self, queryset, request):
-        selected_min_value, selected_max_value = self._get_min_and_max(request)
-        filter_query = self.get_filter_query('price_uah', selected_min_value, selected_max_value)
-        return queryset.filter(filter_query)
+    @classmethod
+    def get_default_creation_kwargs(cls):
+        return {'name': ugettext('BrandFilter'), 'priority': 10}
 
-    def update(self):
-        return super(NumericPriceFilter, self).base_update(field='price_uah')
-
-    def get_queryset(self):
-        products = self.get_related_products()
-        return products_models.ProductConfiguration.objects.filter(product__in=products)
+    def get_template_name(self):
+        return 'brand'

@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, View
 
+from filters import models as filters_models
 from products import models as products_models
 
 
@@ -20,6 +21,7 @@ class ProductListView(ListView):
 
     def get(self, request, *args, **kwargs):
         self.category = self._get_category()
+        self.filters = filters_models.FilterMixin.get_category_filters(self.category)
         if request.is_ajax() and 'count' in request.GET:
             return HttpResponse(
                 json.dumps(self.get_queryset().count()),
@@ -28,7 +30,10 @@ class ProductListView(ListView):
         return super(ProductListView, self).get(request, *args, **kwargs)
 
     def get_queryset(self):
-        return self.category.get_products().filter(is_active=True)
+        queryset = self.category.get_products().filter(is_active=True)
+        for f in self.filters:
+            queryset = f.filter(queryset, self.request)
+        return queryset
 
     def get_template_names(self):
         template = super(ProductListView, self).get_template_names()[0]
@@ -55,6 +60,7 @@ class ProductListView(ListView):
         context = super(ProductListView, self).get_context_data(**kwargs)
         context['count'] = self.get_queryset().count()
         context['category'] = self.category
+        context['filters'] = {f.get_template_name(): f for f in self.filters}
         return context
 
     def _get_category(self):

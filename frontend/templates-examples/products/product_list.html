@@ -37,7 +37,27 @@ Total amount of products in category: {{ count }}
 
 <h3> Filters </h3>
 
-Not implemented yet.
+<h4>Price filter</h4>
+Name: {{ filters.price.name }}
+<br/>
+Min value for current category: {{ filters.price.min_value }}
+<br/>
+Max value for current category: {{ filters.price.max_value }}
+<br/>
+<a href="?price_min=100">Filter products with price &gt; 100</a>
+<br/>
+<a href="?price_max=200">Filter products with price &lt; 200</a>
+<br/>
+<a href="?price_max=150&price_min=50">Filter products with 50 &lt; price &lt; 150</a>
+
+<h4> Brand filter </h4>
+Name: {{ filters.brand.name }}
+<br/>
+<ul> get product with brand:
+    {% for brand_name in filters.brand.get_formatted_choices %}
+    <li> <a href="?brand={{ forloop.counter }}"> {{ brand_name }} </a>
+    {% endfor %}
+</ul>
 
 <h3> Ordering </h3>
 
