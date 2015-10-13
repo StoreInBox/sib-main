@@ -31,8 +31,11 @@ class ProductListView(ListView):
 
     def get_queryset(self):
         queryset = self.category.get_products().filter(is_active=True)
+        # filtering
         for f in self.filters:
             queryset = f.filter(queryset, self.request)
+        # ordering
+        queryset = self._order_queryset(queryset)
         return queryset
 
     def get_template_names(self):
@@ -62,6 +65,13 @@ class ProductListView(ListView):
         context['category'] = self.category
         context['filters'] = {f.get_template_name(): f for f in self.filters}
         return context
+
+    def _order_queryset(self, queryset):
+        if self.request.GET.get('order_by') == 'price_asc':
+            queryset = queryset.order_by('price')
+        if self.request.GET.get('order_by') == 'price_desc':
+            queryset = queryset.order_by('-price')
+        return queryset
 
     def _get_category(self):
         return get_object_or_404(

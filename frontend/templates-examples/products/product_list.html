@@ -53,7 +53,7 @@ Max value for current category: {{ filters.price.max_value }}
 <h4> Brand filter </h4>
 Name: {{ filters.brand.name }}
 <br/>
-<ul> get product with brand:
+<ul> Get product with brand:
     {% for brand_name in filters.brand.get_formatted_choices %}
     <li> <a href="?brand={{ forloop.counter }}"> {{ brand_name }} </a>
     {% endfor %}
@@ -61,7 +61,9 @@ Name: {{ filters.brand.name }}
 
 <h3> Ordering </h3>
 
-Not implemented yet.
+<a href="?order_by=price_asc">Order products by price in ascending order</a>
+<br/>
+<a href="?order_by=price_desc">Order products by price in descending order</a>
 
 <h3> Pagination </h3>
 
