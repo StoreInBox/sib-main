@@ -75,7 +75,7 @@ class Command(BaseCommand):
     ]
 
     def _get_test_image(self):
-        path = os.path.join(settings.BASE_DIR, 'main', 'assembly', 'management', 'commands', 'testimages')
+        path = os.path.join(settings.BASE_DIR, 'assembly', 'management', 'commands', 'testimages')
         images = [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))]
         return File(open(os.path.join(path, random.choice(images))))
 
@@ -116,7 +116,7 @@ class Command(BaseCommand):
         for index, category in enumerate(categories):
             self.stdout.write(' - creating products for category {}'.format(category))
             for i in range(15 if index == 0 else 3):
-                products_models.Product.objects.create(
+                product = products_models.Product.objects.create(
                     name='product-{}-{}'.format(category.id, i),
                     code=uuid.uuid4().hex,
                     brand=random.choice(['B1', 'B2', 'B3', 'B4', 'B5']),
@@ -125,6 +125,13 @@ class Command(BaseCommand):
                     category=category,
                     price=(i + 1) * 20,
                 )
+                product.images.create(
+                    image=self._get_test_image(),
+                    description='Main image of product {}'.format(product.name))
+                product.images.create(
+                    image=self._get_test_image(),
+                    description='Second image of product {}'.format(product.name),
+                    is_main=False)
         self.stdout.write('...Done')
 
     # def _create_filters(self, fast=False):

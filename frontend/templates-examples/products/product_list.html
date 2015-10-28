@@ -33,7 +33,8 @@ Total amount of products in category: {{ count }}
         {% endfor %}
     </body>
 </table>
-(Products images is not implemented yet)
+
+Product image described at the bottom of page.
 
 <h3> Filters </h3>
 
@@ -140,4 +141,18 @@ same parameters. (Can be used to show products without pagination) </p>
 <p> If current URL will be called with GET parameter ?count - it will return only amount of products in category. This
 can be used for filters (to show how many results is filtered out). </p>
 
+<h3> Product images </h3>
 
+First product ({{ product_list.0.name }}) images:
+<br/>
+Small thumbnail:
+<br/>
+<img src="{{ product_list.0.get_main_image.image_small_thumbnail.url }}" title="{{ product_list.0.get_main_image.description }}">
+<br/>
+Big thumbnail:
+<br/>
+<img src="{{ product_list.0.get_main_image.image_big_thumbnail.url }}" title="{{ product_list.0.get_main_image.description }}">
+<br/>
+Original:
+<br/>
+<img src="{{ product_list.0.get_main_image.image.url }}" title="{{ product_list.0.get_main_image.description }}">

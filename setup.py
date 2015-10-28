@@ -16,7 +16,6 @@ install_requires = [
     'Django==1.8.4',
     'Sphinx==1.3.1',
     'Unidecode==0.04.18',
-    'django-model-utils==2.3.1',
     # SIB applications
     'sib-products',
     'sib-filters',

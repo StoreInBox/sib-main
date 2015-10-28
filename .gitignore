@@ -22,6 +22,10 @@ db.sqlite3
 
 TEST-*.xml
 
+# django
+/.scripts
+/media
+
 # documentation
 docs/_build/
 

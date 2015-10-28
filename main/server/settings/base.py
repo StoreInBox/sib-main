@@ -25,6 +25,7 @@ INSTALLED_APPS = (
     # sib applications
     'products',
     'filters',
+    'export',
     # main module
     'main.assembly',
 )
@@ -105,4 +106,8 @@ FILTERS = {
     'Product': 'products.Product',
     'Category': 'products.Category',
     'Characteristic': 'products.Characteristic',
+}
+
+EXPORT = {
+    'Product': 'products.Product',
 }
