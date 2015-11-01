@@ -9,11 +9,18 @@ Installation
 
     $ cd sib-main
 
+1.1. (Optional) Install and activate virtual environment:
+
+   .. code-block:: bash
+
+    $ virtualenv venv
+    $ source venv/bin/activate
+
 2. Install project (recommended to use virtual environment):
 
     .. code-block:: bash
 
-    $ python setup.py develop -U
+    $ python setup.py develop
 
 3. Create custom settings for project and configure them if needed:
 
@@ -52,25 +59,31 @@ Please recreate database after each update. Follow next steps
 
     $ git pull origin master
 
-2. Update dependencies:
+2. Remove SIB modules from cached files
+
+    .. code-block:: bash
+
+    $ sed -i -n '/sib_/!p' venv/lib/python2.7/site-packages/easy-install.pth
+
+3. Update dependencies
 
     .. code-block:: bash
 
     $ python setup.py develop -U
 
-3. Remove project database
+4. Remove project database
 
     .. code-block:: bash
 
     $ rm db.sqlite3
 
-4. Migrate tables
+5. Migrate tables
 
     .. code-block:: bash
 
     $ python manage.py migrate
 
-5. Create test data
+6. Create test data
 
     .. code-block:: bash
 
