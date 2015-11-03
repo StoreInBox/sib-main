@@ -2,9 +2,9 @@
 
 {% block content %}
     {% for category in categories %}
-        <a href="{% url 'products' category_pk=category.pk category_slug=category.slug %}">{{ category }}</a><br/>
+        <a href="{% url 'product-list' category_pk=category.pk category_slug=category.slug %}">{{ category }}</a><br/>
         {% for child in category.children.all %}
-             - <a href="{% url 'products' category_pk=child.pk category_slug=child.slug %}">{{ child }}</a><br/>
+             - <a href="{% url 'product-list' category_pk=child.pk category_slug=child.slug %}">{{ child }}</a><br/>
         {% endfor %}
         <hr/>
     {% endfor %}

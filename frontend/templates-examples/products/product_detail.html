@@ -1,0 +1,46 @@
+<h2> Product detail page </h2>
+
+<h3> Product base fields </h3>
+
+<ul>
+    <li>Product name: {{ product.name }}</li>
+    <li>Product code: {{ product.code }}</li>
+    <li>Product short description: {{ product.short_description }}</li>
+    <li>Product brand: {{ product.brand }}</li>
+    <li>Product category: {{ product.category }}</li>
+    <li>Product price: {{ product.price }}</li>
+</ul>
+
+<p> Product description (can contain HTML tags): {{ product.description | safe }} </p>
+
+
+<h3> Configured product attributes </h3>
+
+<ul>
+    {% for attribute in product.attributes.all %}
+    <li>{{ attribute.name }}: {{ attribute.value }}</li>
+    {% endfor %}
+</ul>
+
+<h3> Product main image </h3>
+
+Small thumbnail:
+<br/>
+<img src="{{ product.get_main_image.image_small_thumbnail.url }}" title="{{ product.get_main_image.description }}">
+<br/>
+Big thumbnail:
+<br/>
+<img src="{{ product.get_main_image.image_big_thumbnail.url }}" title="{{ product.get_main_image.description }}">
+<br/>
+Original:
+<br/>
+<img src="{{ product.get_main_image.image.url }}" title="{{ product.get_main_image.description }}">
+
+<h3> All product images </h3>
+<p> Each image has small thumbnail, big thumbnail and original size </p>
+
+{% for image in product.images.all %}
+    <br/>
+    <img src="{{ image.image_small_thumbnail.url }}" title="{{ image.description }}">
+    <br/>
+{% endfor %}

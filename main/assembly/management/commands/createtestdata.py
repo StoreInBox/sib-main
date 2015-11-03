@@ -33,11 +33,6 @@ class Command(BaseCommand):
             'units': 'm',
             'default_value': 0,
         },
-        {
-            'name': 'brand',
-            'units': '',
-            'default_value': '',
-        }
     ]
 
     CATEGORIES = [
@@ -132,6 +127,13 @@ class Command(BaseCommand):
                     image=self._get_test_image(),
                     description='Second image of product {}'.format(product.name),
                     is_main=False)
+                for characteristic in products_models.Characteristic.objects.all():
+                    product.attributes.create(
+                        characteristic=characteristic,
+                        name=characteristic.name,
+                        units=characteristic.units,
+                        value=(i + 1) * 5,
+                    )
         self.stdout.write('...Done')
 
     # def _create_filters(self, fast=False):

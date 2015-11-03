@@ -25,6 +25,7 @@ INSTALLED_APPS = (
     # sib applications
     'products',
     'filters',
+    'cart',
     'export',
     # main module
     'main.assembly',
@@ -110,4 +111,11 @@ FILTERS = {
 
 EXPORT = {
     'Product': 'products.Product',
+}
+
+CART = {
+    'Product': 'products.Product',
+    'product_price': 'price',
+    'product_code': 'code',
+    'product_name': 'name',
 }
