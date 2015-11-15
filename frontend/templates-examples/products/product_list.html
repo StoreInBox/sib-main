@@ -133,6 +133,14 @@ Example of pagination:
     {% endif %}
 </ul>
 
+<h3> Products export </h3>
+
+<ul>
+    <li><a href="{% url 'products-export' export_format='pdf' %}?download=1">PDF</a></li>
+    <li><a href="{% url 'products-export' export_format='csv' %}?download=1">CSV</a></li>
+    <li><a href="{% url 'products-export' export_format='xls' %}?download=1">XLS</a></li>
+</ul>
+
 <h3> Additional info </h3>
 
 <p> If current URL will be called with ajax it will return template 'products/product_list_ajax.html' with the
