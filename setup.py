@@ -27,7 +27,7 @@ dependency_links = [
     'git+https://github.com/StoreInBox/sib-products.git#egg=sib-products',
     'git+https://github.com/StoreInBox/sib-filters.git#egg=sib-filters',
     'git+https://github.com/StoreInBox/sib-export.git#egg=sib-export',
-    'git+https://github.com/StoreInBox/sib-export.git#egg=sib-cart',
+    'git+https://github.com/StoreInBox/sib-cart.git#egg=sib-cart',
 ]
 
 setup(
