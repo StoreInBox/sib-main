@@ -11,8 +11,11 @@ urlpatterns = patterns(
     # Custom applications
     url(r'', include('main.assembly.urls')),
     url(r'', include('export.urls')),
+    url(r'', include('cart.urls')),
     # Django applications
     url(r'^admin/', include(admin.site.urls)),
+    # Third-part applications
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 )
 
 

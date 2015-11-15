@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+
+<p>This example template demonstrates cart js plugin logic and it should not be implemented</p>
+<hr/>
+
+<div class="message"></div>
+
+<b>Cart representation:</b><br/> <br/>
+
+Total price: <span class='cart-total'></span><br/>
+Total products count: <span class='cart-count'></span><br/>
+Products:
+<div class='cart-products'></div>
+
+<br/><hr/><br/>
+
+<b>Set product count in cart:</b><br/><br/>
+Product PK: <input class="cart-set-product-pk" type="text" value="1"/><br/>
+Product Count: <input class="cart-set-count" type="text" value="1"/><br/>
+<button class="cart-set">Set</button><br/>
+
+<br/><hr/><br/>
+
+<b>Increase(add) product count:</b><br/><br/>
+Product PK: <input class="cart-add-product-pk" type="text" value="1"/><br/>
+Product Count: <input class="cart-add-count" type="text" value="1"/><br/>
+<button class="cart-add">Add</button><br/>
+
+<br/><hr/><br/>
+
+<b>Delete product:</b><br/><br/>
+Product PK: <input class="cart-delete-product-pk" type="text" value="1"/><br/>
+<button class="cart-delete">Delete</button><br/>
+
+
+{% endblock %}
+
+
+<!-- TODO: compile jquery to production js -->
+{% block basejs %}
+{% endblock %}
+
+{% block js %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="{% static 'assembly/csrf.js' %}"></script>
+
+    <script sib-cart-role="init" sib-cart-url="{% url 'cart' %}" src="{% static 'cart/cart.js' %}"></script>
+    <script type="text/javascript">
+        var cart;
+
+        function update() {
+            $('.cart-total').text(cart.total);
+            $('.cart-count').text(cart.count);
+            $('.cart-products').text(cart.products.toSource());
+        };
+
+        cart = new Cart(update);  // initialize cart and call function "update" on each cart data change
+
+        // link cart operations to corresponding buttons:
+        $('.cart-set').click(function() {
+            var productPK = $('.cart-set-product-pk').val(),
+                productCount = $('.cart-set-count').val();
+            cart.set(productPK, productCount, function() {
+                $('.message').text('Product was successfully set in cart');
+            });
+        });
+
+        $('.cart-add').click(function() {
+            var productPK = $('.cart-add-product-pk').val(),
+                productCount = $('.cart-add-count').val();
+            cart.add(productPK, productCount, function() {
+                $('.message').text('Product was successfully added to cart');
+            });
+        });
+
+        $('.cart-delete').click(function() {
+            var productPK = $('.cart-delete-product-pk').val();
+            cart.delete(productPK, function() {
+                $('.message').text('Product was successfully deleted from cart');
+            });
+        });
+    </script>
+{% endblock %}

@@ -98,6 +98,7 @@ STATICFILES_DIRS = (
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     os.path.join(PROJECT_DIR, 'frontend', 'static'),
+    os.path.join(PROJECT_DIR, 'main', 'assembly', 'static'),
 )
 
 
