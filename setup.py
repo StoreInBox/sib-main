@@ -20,12 +20,14 @@ install_requires = [
     'sib-products',
     'sib-filters',
     'sib-export',
+    'sib-cart',
 ]
 
 dependency_links = [
     'git+https://github.com/StoreInBox/sib-products.git#egg=sib-products',
     'git+https://github.com/StoreInBox/sib-filters.git#egg=sib-filters',
     'git+https://github.com/StoreInBox/sib-export.git#egg=sib-export',
+    'git+https://github.com/StoreInBox/sib-export.git#egg=sib-cart',
 ]
 
 setup(
