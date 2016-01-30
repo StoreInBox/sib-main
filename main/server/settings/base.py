@@ -26,7 +26,7 @@ INSTALLED_APPS = (
     'products',
     'filters',
     'cart',
-    'export',
+    # 'export',
     # main module
     'main.assembly',
 )
