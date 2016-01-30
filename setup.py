@@ -19,7 +19,8 @@ install_requires = [
     # SIB applications
     'sib-products',
     'sib-filters',
-    'sib-export',
+    # export lib uses lxml that cannot be packed on server for now
+    # 'sib-export',
     'sib-cart',
 ]
 

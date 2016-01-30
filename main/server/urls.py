@@ -10,7 +10,7 @@ urlpatterns = patterns(
     '',
     # Custom applications
     url(r'', include('main.assembly.urls')),
-    url(r'', include('export.urls')),
+    # url(r'', include('export.urls')),
     url(r'', include('cart.urls')),
     # Django applications
     url(r'^admin/', include(admin.site.urls)),
