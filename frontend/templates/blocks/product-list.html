@@ -1,9 +1,0 @@
-<section class="b-product-list" data-front="product-list">
-{% for category in categories %}
-    {{ category }}<br/>
-    {% for child in category.children.all %}
-         {% include "blocks/product-list-item.html" with price="34" photo="/static/images/tmp/milanotram.jpg" %}
-    {% endfor %}
-    <hr/>
-{% endfor %}
-</section>

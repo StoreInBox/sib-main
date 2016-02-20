@@ -1,0 +1,62 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html ng-app="SIBAdmin">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{% block title %} SIB Admin {% endblock %}</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.5 -->
+    <link rel="stylesheet" href="{% static 'admin/bootstrap/css/bootstrap.min.css' %}">
+    <!-- ng-tags-input -->
+    <link rel="stylesheet" href="{% static 'admin/plugins/ng-tags-input/ng-tags-input.min.css' %}">
+    <link rel="stylesheet" href="{% static 'admin/plugins/ng-tags-input/ng-tags-input.bootstrap.min.css' %}">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{% static 'admin/css/AdminLTE.min.css' %}">
+    <link rel="stylesheet" href="{% static 'admin/css/skins/skin-blue.min.css' %}">
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/restangular/1.5.1/restangular.min.js"></script>
+    {% block css %}{% endblock %}
+  </head>
+  <body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+
+      {% include 'sibadmin/header.html' %}
+      {% include 'sibadmin/sidebar.html' %}
+
+      {% block modals %}{% endblock %}
+
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+        {% block content %}{% endblock %}
+      </div><!-- /.content-wrapper -->
+
+      {% include 'sibadmin/footer.html' %}
+
+    </div><!-- ./wrapper -->
+
+    <!-- jQuery 2.1.4 -->
+    <script src="{% static 'admin/plugins/jQuery/jQuery-2.1.4.min.js' %}"></script>
+    <!-- Bootstrap 3.3.5 -->
+    <script src="{% static 'admin/bootstrap/js/bootstrap.min.js' %}"></script>
+    <!-- AdminLTE App -->
+    <script src="{% static 'admin/js/app.min.js' %}"></script>
+    <!-- Plugins -->
+    <script type="text/javascript" src="{% static 'admin/plugins/ng-tags-input/ng-tags-input.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'admin/plugins/ng-tags-input/ng-tags-input.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'admin/plugins/ng-file-upload/ng-file-upload.min.js' %}"></script>
+    <!-- Custom Angular packages -->
+    <script type="text/javascript" src="{% static 'js/app.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/controllers/categories.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/controllers/category-edit.js' %}"></script>
+
+    {% block js %}{% endblock %}
+  </body>
+</html>

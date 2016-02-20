@@ -22,13 +22,16 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # sib applications
+    # installed applications
+    'rest_framework',
+    # SIB applications
     'products',
     'filters',
     'cart',
     # 'export',
     # main module
     'main.assembly',
+    'main.sibadmin',
 )
 
 MIDDLEWARE_CLASSES = (

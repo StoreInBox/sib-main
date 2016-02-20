@@ -15,7 +15,7 @@ from products import models as products_models
 
 class Command(BaseCommand):
     args = 'no args for this command'
-    help = 'Creates '
+    help = 'Creates test data'
 
     CHARACTERISTICS = [
         {
@@ -87,10 +87,12 @@ class Command(BaseCommand):
         for parent_category_data in self.CATEGORIES:
             if not products_models.Category.objects.filter(name=parent_category_data['name']).exists():
                 children = parent_category_data.pop('children')
-                parent_category = products_models.Category.objects.create(**parent_category_data)
+                parent_category = products_models.Category.objects.create(
+                    image=self._get_test_image(), **parent_category_data)
                 self.stdout.write('Parent category {} created'.format(parent_category))
                 for child_data in children:
-                    category = products_models.Category.objects.create(parent=parent_category, **child_data)
+                    category = products_models.Category.objects.create(
+                        image=self._get_test_image(), parent=parent_category, **child_data)
                     self.stdout.write('Child category {} created'.format(category))
         self.stdout.write('...Done')
 

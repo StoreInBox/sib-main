@@ -1,9 +1,0 @@
-.b-section-title {
-    @include basic-block;
-    margin-top: $standart-margin-between;
-    margin-bottom: $standart-margin-between;
-    text-align: center;
-    &__text {
-        @include font-size(36);
-    }
-}

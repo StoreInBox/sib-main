@@ -1,0 +1,30 @@
+{% load staticfiles %}
+
+<!-- Left side column. contains the logo and sidebar -->
+<aside class="main-sidebar">
+  <!-- sidebar: style can be found in sidebar.less -->
+  <section class="sidebar">
+    <!-- Sidebar user panel -->
+    <div class="user-panel">
+      <div class="pull-left image">
+        <img src="{% static 'admin/img/user2-160x160.jpg' %}" class="img-circle" alt="User Image">
+      </div>
+      <div class="pull-left info">
+        <br/>
+        <p>Alexander Pierce</p>
+      </div>
+    </div>
+    <!-- sidebar menu: : style can be found in sidebar.less -->
+    <ul class="sidebar-menu">
+      <li class="header">NAVIGATION</li>
+      {% for view in all_admin_views %}
+        <li class="{% if name == view.name %}active{% endif %} treeview">
+          <a href="{{ view.get_url }}">
+            <i class="fa {{ view.icon }}"></i> <span>{{ view.name }}</span></i>
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  </section>
+  <!-- /.sidebar -->
+</aside>
