@@ -19,10 +19,6 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="{% static 'admin/css/AdminLTE.min.css' %}">
     <link rel="stylesheet" href="{% static 'admin/css/skins/skin-blue.min.css' %}">
-
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
-    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
-    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/restangular/1.5.1/restangular.min.js"></script>
     {% block css %}{% endblock %}
   </head>
   <body class="hold-transition skin-blue sidebar-mini">
@@ -44,14 +40,20 @@
 
     <!-- jQuery 2.1.4 -->
     <script src="{% static 'admin/plugins/jQuery/jQuery-2.1.4.min.js' %}"></script>
+    <script src="{% static 'admin/plugins/jQueryUI/jquery-ui.min.js' %}"></script>
+    <!-- Angular -->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/restangular/1.5.1/restangular.min.js"></script>
     <!-- Bootstrap 3.3.5 -->
     <script src="{% static 'admin/bootstrap/js/bootstrap.min.js' %}"></script>
     <!-- AdminLTE App -->
     <script src="{% static 'admin/js/app.min.js' %}"></script>
     <!-- Plugins -->
     <script type="text/javascript" src="{% static 'admin/plugins/ng-tags-input/ng-tags-input.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'admin/plugins/ng-tags-input/ng-tags-input.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'admin/plugins/ng-file-upload/ng-file-upload.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'admin/plugins/angular-ui-sortable/sortable.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'admin/plugins/remarkable-bootstrap-notify/bootstrap-notify.min.js' %}"></script>
     <!-- Custom Angular packages -->
     <script type="text/javascript" src="{% static 'js/app.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/controllers/categories.js' %}"></script>

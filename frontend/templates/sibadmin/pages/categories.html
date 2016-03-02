@@ -13,7 +13,7 @@
     display:inline;
   }
   .action-container {
-    float:right;
+    float:right!important;
     padding-top: 8px;
     width:120px;
   }
@@ -62,13 +62,20 @@
             <button ng-click="controller.addCategory()" class="btn btn-block btn-success btn-action">Add</button>
           </span>
           <span style="float:right; padding-right: 10px;">
-            <button backend-id="save-categories-ordering" class="btn btn-block btn-default btn-action disabled">Save ordering </button>
+            <button ng-class="['btn', 'btn-block', 'btn-action', 
+                               {'disabled': controller.disableOrderSave},
+                               {'btn-default': controller.disableOrderSave},
+                               {'btn-warning': !controller.disableOrderSave}]"
+                    ng-click="controller.saveCategoriesOrder()">
+              <i ng-show="controller.orderingSaveInProcess" class='fa fa-circle-o-notch fa-spin'></i>
+              <span ng-show="!controller.orderingSaveInProcess">Save ordering</span>
+            </button>
           </span>
         </div>
         <div class="box-body">
-          <table id="top-categories" class="table table-hover">
-            <tbody>
-            <tr style="cursor:pointer" ng-repeat="topCategory in controller.topCategories">
+          <table class="table table-hover">
+            <tbody ui-sortable="controller.sortableOptions" ng-model="controller.topCategories">
+            <tr style="cursor:all-scroll" ng-repeat="topCategory in controller.topCategories">
               <td style="padding:0px;">
                 <div style="padding:8px;">
                   <button ng-click="controller.showCategoryChildren(topCategory)" class="btn btn-default">
@@ -89,15 +96,15 @@
                   </span>
                 </div>
                 <!-- child categories -->
-                <table id="child-categories-{{ topCategory.id }}" class="table table-hover table-children" ng-show="topCategory.showChildren">
-                  <tbody>
+                <table class="table table-hover table-children" ng-show="topCategory.showChildren">
+                  <tbody ui-sortable="controller.sortableOptions" ng-model="topCategory.children">
                     <tr ng-repeat="childCategory in topCategory.children">
                       <td style="padding-left:100px; padding-right:100px;" ng-mouseenter="showChildActions=true" ng-mouseleave="showChildActions=false">
                         <img width="35" height="35" ng-src="{{ childCategory.image }}" class="user-image" alt="">
                         &nbsp;&nbsp;
                         <span class="lead" style="font-size: 1.2em;">{{ childCategory.name }}</span>
                         <span class="child-action-container" ng-show="showChildActions">
-                          <button ng-click="controller.deleteCategory(childCategory)" class="btn btn-block btn-danger btn-action">Delete</button>
+                          <button ng-click="controller.deleteChildCategory(topCategory, childCategory)" class="btn btn-block btn-danger btn-action">Delete</button>
                         </span>
                         <span class="child-action-container" ng-show="showChildActions">
                           <button ng-click="controller.editChildCategory(topCategory, childCategory)" class="btn btn-block btn-success btn-action">Edit</button>

@@ -1,78 +1,58 @@
-angular.module('SIBAdmin').controller('CategoryEditController', function($scope, Restangular) {
-  var vm = this;
-  var baseCategories = Restangular.all('api/products/categories');
+angular.module('SIBAdmin').controller('CategoryEditController', function($rootScope, $scope, Upload, Restangular) {
+  var vm = this,
+      baseURL = 'api/products/categories';
 
   vm.category = {};
-  tags = ['test1', 'test2'];
-  $scope.file = null;
 
-  $scope.$watch('file', function () {
-    console.log($scope.file);
-  });
-
-  $scope.$on('addCategory', function() {
-    vm.category = {};
-    $('#category-edit').modal('toggle');
-  });
-
-  $scope.$on('editCategory', function(event, category) {
+  $scope.$on('editCategory', function(event, parent, category) {
+    vm.isUpdate = category.hasOwnProperty('id')
+    $scope.file = null;
+    vm.parent = parent;
     vm.category = category;
     $('#category-edit').modal('toggle');
   });
 
-  $scope.$on('addChildCategory', function(event, parent) {
-    vm.category = {parent: parent};
-    $('#category-edit').modal('toggle');
-  });
+  vm.saveInProgress = false;
+  vm.save = function() {
+    vm.isUpdate = vm.category.hasOwnProperty('id');
+    image = $scope.file;
 
-  $scope.$on('editChildCategory', function(event, parent, category) {
-    vm.category = category
-    vm.category.parent = parent;
-    $('#category-edit').modal('toggle');
-  });
+    vm.validationErrors = {}
+    if (!vm.category.name) vm.validationErrors.emptyName = true;
+    if (!image && !vm.isUpdate) vm.validationErrors.emptyImage = true;
+
+    vm.isError = !$.isEmptyObject(vm.validationErrors)
+    if (vm.isError) {
+      vm.saveInProgress = false;
+      return
+    }
+    vm.saveInProgress = true;
+
+    url = baseURL + '/';
+    if (vm.isUpdate) url += vm.category.id + '/';
+
+    data = {name: vm.category.name, characteristics: JSON.stringify(vm.category.characteristics)}
+    if (vm.parent) data.parent = vm.parent.id
+    if (image) data.image = image;
+    method = 'POST';
+    if (vm.isUpdate) method = 'PATCH';
+
+    console.log(data.toSource());
+    Upload.upload({
+      url: url,
+      data: data,
+      method: method
+    }).then(function(response) {
+      newCategory = response.data;
+      vm.saveInProgress = false;
+      $('#category-edit').modal('hide');
+      if (!vm.isUpdate) {
+        $rootScope.$broadcast('categoryAdded', vm.parent, newCategory);
+      } else {
+        $rootScope.$broadcast('categoryUpdated', vm.parent, vm.category, newCategory);
+      }
+      $scope.file = null;
+    });
+  }
 
 });
-
-
-
-// app.controller('MyCtrl', ['$scope', 'Upload', '$timeout', function ($scope, Upload, $timeout) {
-//     $scope.$watch('files', function () {
-//         $scope.upload($scope.files);
-//     });
-//     $scope.$watch('file', function () {
-//         if ($scope.file != null) {
-//             $scope.files = [$scope.file];
-//         }
-//     });
-//     $scope.log = '';
-
-//     $scope.upload = function (files) {
-//         if (files && files.length) {
-//             for (var i = 0; i < files.length; i++) {
-//               var file = files[i];
-//               if (!file.$error) {
-//                 Upload.upload({
-//                     url: 'https://angular-file-upload-cors-srv.appspot.com/upload',
-//                     data: {
-//                       username: $scope.username,
-//                       file: file
-//                     }
-//                 }).then(function (resp) {
-//                     $timeout(function() {
-//                         $scope.log = 'file: ' +
-//                         resp.config.data.file.name +
-//                         ', Response: ' + JSON.stringify(resp.data) +
-//                         '\n' + $scope.log;
-//                     });
-//                 }, null, function (evt) {
-//                     var progressPercentage = parseInt(100.0 *
-//                         evt.loaded / evt.total);
-//                     $scope.log = 'progress: ' + progressPercentage +
-//                       '% ' + evt.config.data.file.name + '\n' +
-//                       $scope.log;
-//                 });
-//               }
-//             }
-//         }
-//     };
-// }]);

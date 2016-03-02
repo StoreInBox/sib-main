@@ -8,7 +8,7 @@ module.exports = function(grunt) {
                     {
                         expand: true,
                         cwd: 'bower_components/admin-lte/dist',
-                        src: ['*/*/*'],
+                        src: ['*/*/*', '*/*'],
                         dest: 'static/admin/'
                     },
                     {
@@ -40,6 +40,18 @@ module.exports = function(grunt) {
                         cwd: 'bower_components/ng-file-upload',
                         src: ['*.min.*'],
                         dest: 'static/admin/plugins/ng-file-upload',
+                    },
+                    {
+                        expand: true,
+                        cwd: 'bower_components/angular-ui-sortable',
+                        src: ['*.min.js'],
+                        dest: 'static/admin/plugins/angular-ui-sortable',
+                    },
+                    {
+                        expand: true,
+                        cwd: 'bower_components/remarkable-bootstrap-notify/dist',
+                        src: ['*.min.js'],
+                        dest: 'static/admin/plugins/remarkable-bootstrap-notify',
                     },
                     {
                         expand: true,

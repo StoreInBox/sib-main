@@ -17,21 +17,16 @@ class Command(BaseCommand):
     args = 'no args for this command'
     help = 'Creates test data'
 
+    # This characteristic will be added to each top-level category
     CHARACTERISTICS = [
         {
             'name': 'weight',
-            'units': 'kg',
-            'default_value': 0,
         },
         {
             'name': 'width',
-            'units': 'm',
-            'default_value': 0,
         },
         {
             'name': 'height',
-            'units': 'm',
-            'default_value': 0,
         },
     ]
 
@@ -74,26 +69,30 @@ class Command(BaseCommand):
         images = [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))]
         return File(open(os.path.join(path, random.choice(images))))
 
-    def _create_characteristics(self):
-        self.stdout.write('Creating characteristics...')
+    def _create_characteristics(self, category):
+        self.stdout.write('Creating category characteristics...')
         for characteristic_data in self.CHARACTERISTICS:
-            if not products_models.Characteristic.objects.filter(name=characteristic_data['name']).exists():
-                characteristic = products_models.Characteristic.objects.create(**characteristic_data)
+            kwargs = {'name': characteristic_data['name'], 'category': category}
+            if not products_models.Characteristic.objects.filter(**kwargs).exists():
+                characteristic = products_models.Characteristic.objects.create(**kwargs)
                 self.stdout.write('Characteristic {} created'.format(characteristic))
         self.stdout.write('...Done')
 
     def _create_categories(self):
         self.stdout.write('Creating sections, categories and subcategories...')
         for parent_category_data in self.CATEGORIES:
-            if not products_models.Category.objects.filter(name=parent_category_data['name']).exists():
-                children = parent_category_data.pop('children')
-                parent_category = products_models.Category.objects.create(
-                    image=self._get_test_image(), **parent_category_data)
-                self.stdout.write('Parent category {} created'.format(parent_category))
-                for child_data in children:
-                    category = products_models.Category.objects.create(
-                        image=self._get_test_image(), parent=parent_category, **child_data)
-                    self.stdout.write('Child category {} created'.format(category))
+            if products_models.Category.objects.filter(name=parent_category_data['name']).exists():
+                continue
+            children = parent_category_data.pop('children')
+            parent_category = products_models.Category.objects.create(
+                image=self._get_test_image(), **parent_category_data)
+            self.stdout.write('Parent category {} created'.format(parent_category))
+            for child_data in children:
+                category = products_models.Category.objects.create(
+                    image=self._get_test_image(), parent=parent_category, **child_data)
+                self.stdout.write('Child category {} created'.format(category))
+            self._create_characteristics(category)
+
         self.stdout.write('...Done')
 
     def _create_users(self):
@@ -133,7 +132,6 @@ class Command(BaseCommand):
                     product.attributes.create(
                         characteristic=characteristic,
                         name=characteristic.name,
-                        units=characteristic.units,
                         value=(i + 1) * 5,
                     )
         self.stdout.write('...Done')
@@ -167,7 +165,6 @@ class Command(BaseCommand):
     #     self.stdout.write('...Done')
 
     def handle(self, *args, **options):
-        self._create_characteristics()
         self._create_categories()
         self._create_users()
         self._create_products(fast='fast' in args)
