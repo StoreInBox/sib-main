@@ -32,7 +32,11 @@ angular.module('SIBAdmin').controller('CategoryEditController', function($rootSc
     if (vm.isUpdate) url += vm.category.id + '/';
 
     data = {name: vm.category.name, characteristics: JSON.stringify(vm.category.characteristics)}
-    if (vm.parent) data.parent = vm.parent.id
+    if (vm.parent) {
+      data.parent = vm.parent.id
+    } else {
+      data.parent = null;
+    }
     if (image) data.image = image;
     method = 'POST';
     if (vm.isUpdate) method = 'PATCH';
