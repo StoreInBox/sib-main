@@ -38,7 +38,7 @@
         </div>
 
         <div ng-show="controller.parent" class="row" style="height: 60px; display: flex; align-items: center;">
-          <div class="col-xs-12" style="font-size: 1.2em;">
+          <div class="col-xs-12" style="font-size: 1.2em;" ng-show="controller.parent.characteristics">
             Parent characteristics:
             <span ng-repeat="c in controller.parent.characteristics" class="label bg-blue" style="margin: 5px;">{{ c.name }}</span> 
           </div>
@@ -48,6 +48,7 @@
             <tags-input ng-model="controller.category.characteristics" placeholder="Add characteristic"
                         display-property="name" key-property="name" >
             </tags-input>
+            <small>Type characteristic name and press enter to add it.</small>
           </div>
         </div>
 
