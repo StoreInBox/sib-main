@@ -27,6 +27,7 @@ INSTALLED_APPS = (
     'filters',
     'cart',
     'export',
+    'orders',
     # main module
     'main.assembly',
 )
@@ -99,8 +100,8 @@ STATICFILES_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
     os.path.join(PROJECT_DIR, 'frontend', 'static'),
     os.path.join(PROJECT_DIR, 'main', 'assembly', 'static'),
+    os.path.join(os.path.dirname(PROJECT_DIR), 'orders', 'static'),
 )
-
 
 # *************************** APPLICATIONS SETTINGS *************************** #
 
@@ -119,4 +120,15 @@ CART = {
     'product_price': 'price',
     'product_code': 'code',
     'product_name': 'name',
+}
+
+ORDERS = {
+    #The setting 'ORDERS' must also include the key 'fields_to_store' (type list), if  the value of this key is not map
+    # the list from values of the next keys of ORDER - 'product_price', 'product_code' and 'product_name'.
+    #Example: 'fields_to_store': ['name', 'price'] or 'fields_to_store': ['name'] ets.
+    'Product': 'products.Product',
+    'product_price': 'price',
+    'product_code': 'code',
+    'product_name': 'name',
+    'success_url': 'home'
 }
