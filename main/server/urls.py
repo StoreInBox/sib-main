@@ -21,7 +21,7 @@ urlpatterns = patterns(
     url(r'', include('main.sibadmin.urls')),
     # url(r'', include('export.urls')),
     url(r'', include('cart.urls')),
-
+    url(r'^orders/', include('orders.urls')),
     # Custom applications APIs
     url(r'api/', include(router.urls)),
 

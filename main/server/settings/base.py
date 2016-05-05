@@ -28,6 +28,7 @@ INSTALLED_APPS = (
     'products',
     'filters',
     'cart',
+    'orders',
     # 'export',
     # main module
     'main.assembly',
@@ -122,4 +123,15 @@ CART = {
     'product_price': 'price',
     'product_code': 'code',
     'product_name': 'name',
+}
+
+ORDERS = {
+    #The setting 'ORDERS' must also include the key 'fields_to_store' (type list), if  the value of this key is not map
+    # the list from values of the next keys of ORDER - 'product_price', 'product_code' and 'product_name'.
+    #Example: 'fields_to_store': ['name', 'price'] or 'fields_to_store': ['name'] ets.
+    'Product': 'products.Product',
+    'product_price': 'price',
+    'product_code': 'code',
+    'product_name': 'name',
+    'success_url': 'home'
 }
